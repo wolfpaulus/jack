@@ -8,3 +8,8 @@ of a smartphone's headphone jack.
 We will use "phone to phone" as well as Arduino to Android examples to demonstrate and explain 
 this cool and innovative communication channel, and you may even pick up a couple 
 DSP (Digital Signal Processing) basics along the way.
+
+Presentation slides are in this file: jack.pdf
+Arduino sketches are in Arduino/sketch_1 (tone demo) and Arduino/sketch_2 (light sensor)
+Android Jack application source is Android directory.
+

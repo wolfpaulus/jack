@@ -3,6 +3,8 @@ package com.techcasita.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,19 +18,42 @@ import com.techcasita.android.sound.SoundReceiver;
  * @author <a href="mailto:wolf@wolfpaulus.com">Wolf Paulus</a>
  */
 public class JackActivity extends Activity {
-    SoundReceiver mReceiver;
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(final Message msg) {
+            if (0 < msg.what) {
+                mTextView.setText("");
+            } else {
+                if (msg.getData() != null) {
+                    String s = msg.getData().getString("Text");
+                    mTextView.setText(s);
+                    try {
+                        mProgressBar.setProgress(Integer.parseInt(s) / 10);
+                    } catch (NumberFormatException e) {
+                        // intentionally empty
+                    }
+                }
+            }
+        }
+    };
+
+    private TextView mTextView;
+    private ProgressBar mProgressBar;
+    private SoundReceiver mReceiver;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        TextView textView = (TextView) findViewById(R.id.tv);
-        ProgressBar pbar = (ProgressBar) findViewById(R.id.pb);
+        mTextView = (TextView) findViewById(R.id.tv);
+        mTextView.setMovementMethod(new ScrollingMovementMethod());
+        mTextView.setText("");
 
-        textView.setMovementMethod(new ScrollingMovementMethod());
+        mProgressBar = (ProgressBar) findViewById(R.id.pb);
+        mProgressBar.setProgress(0);
 
-        mReceiver = new SoundReceiver(textView, pbar);
+        mReceiver = new SoundReceiver(mHandler);
     }
 
     @Override
@@ -46,7 +71,7 @@ public class JackActivity extends Activity {
     }
 
     @SuppressWarnings("UnusedParameters")
-    public void onClick_Toggle(View view) {
+    public void onClick_Toggle(final View view) {
         ToggleButton tb = (ToggleButton) view;
         if (tb.isChecked()) {
             mReceiver.start();

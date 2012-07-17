@@ -46,7 +46,7 @@ public class Decoder {
      * @param bin <code>int</code>
      * @return <code>int</code>  value
      */
-    public byte decode(int bin) {
+    public byte decode(final int bin) {
         int k = (int) ((bin - Const.OFFSET) / 5.0 + 45);
         return (byte) (0x7F & k);
     }
@@ -59,7 +59,7 @@ public class Decoder {
      * @param k <code>int</code> frequency bucket that needs to be considered for decoding
      * @return <code>byte</code> uninterpreted, decoded byte value, mainly for debugging
      */
-    byte put(int k) {
+    byte put(final int k) {
         byte b = decode(k);
         switch (b) {
             case STX: // unique command symbol
@@ -100,14 +100,14 @@ public class Decoder {
         String s = "";
         //Log.v("EnDeco", Arrays.toString(bb));
         if (0 < bbi) {
-            byte[] ta = new byte[bbi];
+            final byte[] ta = new byte[bbi];
             ta[0] = bb[0];
             ta[bbi - 1] = bb[bbi - 1];
             for (int i = 1; i < bbi - 1; i++) {
                 ta[i] = (byte) Decoder.median(bb[i - 1], bb[i], bb[i + 1]);
             }
 
-            byte[] ra = new byte[bbi];
+            final byte[] ra = new byte[bbi];
             int j = 0;
             int i = 0;
             while (i < bbi - 2) {
@@ -133,7 +133,7 @@ public class Decoder {
 
     }
 
-    private static int median(int fa, int fb, int fc) {
+    private static int median(final int fa, final int fb, final int fc) {
         int median;
         if (fa <= fb) {
             median = fb <= fc ? fb : Math.max(fa, fc);

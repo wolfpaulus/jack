@@ -1,6 +1,5 @@
 This repository contains the source code mentioned during my presentation: "Android, Arduino, and the Headphone Jack", which i sfeatured on SpeakerDeck and SlideShare. 
-The slides can also be found on my Website here: [https://wolfpaulus.com/more-talks/](https://wolfpaulus.com/talks/dsp/)
-
+The slides can also be found on my Website here: https://wolfpaulus.com/talks/dsp/
 There are quite a few 3rd party devices that attach to a smartphone's 3.5 mm headphone jack, 
 Square's Credit Card reader, being just one of them. 
 
